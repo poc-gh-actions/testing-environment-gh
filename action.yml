@@ -7,7 +7,7 @@ runs:
   using: 'composite'
   steps:
       - name: Get Environment  
-        id: setup
+        #id: setup
         shell: bash
         run: |
           if [[ "${{ github.ref_name }}" == "develop" ]]; 
