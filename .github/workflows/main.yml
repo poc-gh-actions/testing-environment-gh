@@ -16,7 +16,7 @@ jobs:
           
   deployment:
     runs-on: ubuntu-latest
-    if: ${{ needs.setup.outputs.environment ! null }}
+    if: ${{ needs.setup.outputs.environment != null }}
     needs: setup
     environment: ${{ needs.setup.outputs.environment }}
     steps:
