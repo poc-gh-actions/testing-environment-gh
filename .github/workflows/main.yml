@@ -4,13 +4,11 @@ on:
   push:
     branches:
       - develop
-env:
-  ambiente: "develop"
 
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    environment: ${{ env.ambiente }}
+    environment: ${{ github.ref_name == 'master' && 'production' || 'develop' }}
     steps:
       - name: deploy
         shell: bash
