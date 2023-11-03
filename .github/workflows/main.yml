@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - develop
+env:
+  ambiente: "develop"
 
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    #environment: develop
+    environment: ${{ env.ambiente }}
     steps:
       - name: deploy
         shell: bash
