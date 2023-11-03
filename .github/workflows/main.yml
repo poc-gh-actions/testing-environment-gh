@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check branch and set env variable
         id: setup
-        uses: poc-gh-actions/testing-environment-gh/getEnvironment.yml@main
+        uses: poc-gh-actions/testing-environment-gh@main
         # run: |
         #   if [[ "${{ github.ref_name }}" == "develop" ]]; 
         #   then
