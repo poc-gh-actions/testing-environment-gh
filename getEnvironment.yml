@@ -1,0 +1,34 @@
+name: 'Action to get environment'
+outputs:
+  environment:
+    description: 'Return environment'
+    
+runs:
+  using: 'composite'
+  steps:
+      - name: Get Environment  
+        bash: shell
+        run: |
+          if [[ "${{ github.ref_name }}" == "develop" ]]; 
+          then
+            echo "Branch is ${{ github.ref_name }}"
+            echo "environment=develop" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "main" ]]; 
+          then
+            echo "Branch is ${{ github.ref_name }}"
+            echo "environment=production" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "release" ]]; 
+          then
+            echo "Branch is ${{ github.ref_name }}"
+            echo "environment=release" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "quality" ]]; 
+          then
+            echo "Branch is ${{ github.ref_name }}"
+            echo "environment=quality" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "test" ]]; 
+          then
+            echo "Branch is ${{ github.ref_name }}"
+            echo "environment=test" >> $GITHUB_OUTPUT            
+          else
+            echo "Environment not defined for the branch ${{ github.ref_name }}"
+          fi          
