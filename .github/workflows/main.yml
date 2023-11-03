@@ -9,7 +9,15 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'main' && 'production' || 'develop' }}
+    #environment: ${{ github.ref_name == 'main' && 'production' || 'develop' }}
+    environment: |-
+      ${{
+           github.ref_name == 'main' && 'production'
+        || github.ref_name == 'release' && 'preproduction'        
+        || github.ref_name == 'quality' && 'quality'
+        || github.ref_name == 'test' && 'test'
+        || github.ref_name == 'develop' && 'develop'
+      }}
     steps:
       - name: deploy
         shell: bash
