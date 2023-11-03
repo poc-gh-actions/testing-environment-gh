@@ -1,4 +1,7 @@
 name: 'Action to get environment'
+inputs:
+  composer_version:
+    value: 2.6.4
 outputs:
   environment:
     value: ${{ steps.setup.outputs.environment }}
@@ -38,9 +41,29 @@ runs:
           else
             echo "Environment not defined for the branch ${{ github.ref_name }}"
           fi
-      - name: Force Failure
-        shell: bash
+      # - name: Force Failure
+      #   shell: bash
+      #   run: |
+      #     if [[ -z "${{ steps.setup.outputs.environment }}" ]]; then
+      #         exit 1
+      #     fi
+      - name: install php composer version ${{inputs.composer_version}}
+        shell: sh
         run: |
-          if [[ -z "${{ steps.setup.outputs.environment }}" ]]; then
-              exit 1
-          fi
+          declare -A composer_versions=(
+            ["2.6.5"]="9a18e1a3aadbcb94c1bafd6c4a98ff931f4b43a456ef48575130466e19f05dd6"
+            ["2.6.4"]="5a39f3e2ce5ba391ee3fecb227faf21390f5b7ed5c56f14cab9e1c3048bcf8b8"
+          )
+        
+          if [[ -n ${composer_versions["${{inputs.composer_version}}"]} ]]; then
+              wget "https://getcomposer.org/download/${{inputs.composer_version}}/composer.phar" -O /tmp/composer.phar \
+              CHECK_HASHFILE=$(php -r "if (hash_file('sha256', '/tmp/composer.phar') === '${composer_versions[${{inputs.composer_version}}]}') { echo \"True"; exit(0); } else { echo \"False"; exit(1); } echo PHP_EOL;")
+              if [[$CHECK_HASHFILE == "True"]] ; then
+                mv /tmp/composer.phar /usr/local/bin/composer \
+                && chmod +x /usr/local/bin/composer
+              else
+                echo "validate checksum fail"
+              fi    
+          else
+              echo "Versao nao encontrada: ${{inputs.composer_version}}"
+          fi 
