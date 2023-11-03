@@ -37,7 +37,7 @@ runs:
                    
           else
             echo "Environment not defined for the branch ${{ github.ref_name }}"
-            echo "environment=" >> $GITHUB_OUTPUT 
+            echo "environment=1" >> $GITHUB_OUTPUT 
           fi
       - name: Force Failure
         shell: bash
