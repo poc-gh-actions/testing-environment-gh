@@ -1,0 +1,16 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    #environment: production
+    steps:
+      - name: deploy
+        shell: bash
+        run: |
+          echo ${{ env.foo }}
