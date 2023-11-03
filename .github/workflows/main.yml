@@ -13,4 +13,4 @@ jobs:
       - name: deploy
         shell: bash
         run: |
-          echo "${{ env.FOO }}"
+          echo "${{ vars.FOO }}"
