@@ -1,5 +1,6 @@
 name: Deployment
 #https://github.com/orgs/community/discussions/38178
+#https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 on:
   workflow_dispatch:
 
@@ -12,43 +13,11 @@ jobs:
       - name: Check branch and set env variable
         id: setup
         uses: poc-gh-actions/testing-environment-gh@main
-        # run: |
-        #   if [[ "${{ github.ref_name }}" == "develop" ]]; 
-        #   then
-        #     echo "Branch is ${{ github.ref_name }}"
-        #     echo "environment=develop" >> $GITHUB_OUTPUT
-        #   elif [[ "${{ github.ref_name }}" == "main" ]]; 
-        #   then
-        #     echo "Branch is ${{ github.ref_name }}"
-        #     echo "environment=production" >> $GITHUB_OUTPUT
-        #   elif [[ "${{ github.ref_name }}" == "release" ]]; 
-        #   then
-        #     echo "Branch is ${{ github.ref_name }}"
-        #     echo "environment=release" >> $GITHUB_OUTPUT
-        #   elif [[ "${{ github.ref_name }}" == "quality" ]]; 
-        #   then
-        #     echo "Branch is ${{ github.ref_name }}"
-        #     echo "environment=quality" >> $GITHUB_OUTPUT
-        #   elif [[ "${{ github.ref_name }}" == "test" ]]; 
-        #   then
-        #     echo "Branch is ${{ github.ref_name }}"
-        #     echo "environment=test" >> $GITHUB_OUTPUT            
-        #   else
-        #     echo "Environment not defined for the branch ${{ github.ref_name }}"
-        #   fi
           
   deployment:
     runs-on: ubuntu-latest
+    if: ${{ needs.setup.outputs.environment ! null }}
     needs: setup
-    #environment: ${{ github.ref_name == 'main' && 'production' || 'develop' }}
-    #environment: |-
-    #  ${{
-    #       github.ref_name == 'main' && 'production'
-    #    || github.ref_name == 'release' && 'preproduction'        
-    #    || github.ref_name == 'quality' && 'quality'
-    #    || github.ref_name == 'test' && 'test'
-    #    || github.ref_name == 'develop' && 'develop'
-    #  }}
     environment: ${{ needs.setup.outputs.environment }}
     steps:
       - name: deploy
