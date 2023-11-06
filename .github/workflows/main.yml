@@ -5,6 +5,9 @@ name: Deployment
 on:
   workflow_dispatch:
 
+env:
+  NODE_VERSION: "${{ vars.FOO }}"
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -25,3 +28,4 @@ jobs:
         shell: bash
         run: |
           echo "${{ vars.FOO }}"
+          echo "${{ env.NODE_VERSION }}"
