@@ -44,9 +44,10 @@ runs:
           fi
           echo "deploy-env=$DEPLOY_ENV" >>"$GITHUB_OUTPUT"
           
-      - name: Force Failure
+      - name: Fail job if branch is not mapped
         shell: bash
         run: |
           if [[ -z "${{ steps.setup.outputs.deploy-env }}" ]]; then
+              echo "The branch is not mapped in the environments!"
               exit 1
           fi
