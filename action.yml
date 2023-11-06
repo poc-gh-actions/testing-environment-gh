@@ -47,6 +47,6 @@ runs:
       - name: Force Failure
         shell: bash
         run: |
-          if [[ -z "${{ steps.setup.outputs.environment }}" ]]; then
+          if [[ -z "${{ steps.setup.outputs.deploy-env }}" ]]; then
               exit 1
           fi
