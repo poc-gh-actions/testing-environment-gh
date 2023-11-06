@@ -9,7 +9,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      environment: ${{ steps.setup.outputs.environment }}
+      deploy-env: ${{ steps.setup.outputs.deploy-env }}
     steps:
       - name: Check branch and set env variable
         id: setup
@@ -17,9 +17,9 @@ jobs:
           
   deployment:
     runs-on: ubuntu-latest
-    if: ${{ needs.setup.outputs.environment != null }}
+    if: ${{ needs.setup.outputs.deploy-env != null }}
     needs: setup
-    environment: ${{ needs.setup.outputs.environment }}
+    environment: ${{ needs.setup.outputs.deploy-env }}
     steps:
       - name: deploy
         shell: bash
