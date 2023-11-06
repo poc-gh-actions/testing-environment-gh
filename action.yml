@@ -13,27 +13,27 @@ runs:
         id: setup
         shell: bash
         run: |
-          if [[ "${{ startsWith(github.ref_name, 'develop') }}" ]]; 
+          if ${{ startsWith(github.ref_name, 'develop') }}; 
           then
             echo "Branch is ${{ github.ref_name }}"
             DEPLOY_ENV="dev"
 
-          elif [[ "${{ github.ref_name }}" == "main" ]]; 
+          elif ${{ github.ref_name }} == 'main'; 
           then
             echo "Branch is ${{ github.ref_name }}"
             DEPLOY_ENV="prd"
 
-          elif [[ "${{ startsWith(github.ref_name, 'release') }}" ]]; 
+          elif ${{ startsWith(github.ref_name, 'release') }}"; 
           then
             echo "Branch is ${{ github.ref_name }}"
             DEPLOY_ENV="pre"
 
-          elif [[ "${{ startsWith(github.ref_name, 'quality') }}" ]]; 
+          elif ${{ startsWith(github.ref_name, 'quality') }}"; 
           then
             echo "Branch is ${{ github.ref_name }}"
             DEPLOY_ENV="qa"
 
-          elif [[ "${{ startsWith(github.ref_name, 'test') }}" ]]; 
+          elif ${{ startsWith(github.ref_name, 'test') }}"; 
           then
             echo "Branch is ${{ github.ref_name }}"
             DEPLOY_ENV="test"   
